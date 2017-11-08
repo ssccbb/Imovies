@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.sung.imovies.ui.MovieDetailActivity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="230dp">
+            <ImageView
+                android:id="@+id/iv_cover_bg"
+                android:scaleType="centerCrop"
+                android:layout_width="match_parent"
+                android:layout_height="140dp" />
+            <View
+                android:background="@color/color_black"
+                android:alpha="0.3"
+                android:layout_width="match_parent"
+                android:layout_height="140dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:id="@+id/ll_cover_content"
+                android:background="@color/color_white"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <ImageView
+                    android:id="@+id/iv_cover"
+                    android:scaleType="centerCrop"
+                    android:layout_width="120dp"
+                    android:layout_height="150dp" />
+            </LinearLayout>
+            <TextView
+                android:layout_toRightOf="@+id/ll_cover_content"
+                android:id="@+id/tv_tittle"
+                android:layout_marginTop="90dp"
+                android:text="一天（one day）"
+                android:textColor="@color/color_white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_toRightOf="@+id/ll_cover_content"
+                android:orientation="vertical"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textSize="12sp"
+                    android:id="@+id/tv_info_1"
+                    android:text="620.6万次播放"
+                    android:textColor="@color/color_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:maxLines="1"
+                    android:id="@+id/tv_info_2"
+                    android:ellipsize="end"
+                    android:textSize="11sp"
+                    android:text="来源：网络"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_light_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:maxLines="1"
+                    android:id="@+id/tv_info_3"
+                    android:ellipsize="end"
+                    android:textSize="11sp"
+                    android:text="UP主：大叔"
+                    android:textColor="@color/color_light_black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_light_black"
+            android:alpha="0.1"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="简介"
+                android:textSize="20sp"
+                android:textColor="@color/color_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="电影简介"
+                android:id="@+id/tv_detail"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
