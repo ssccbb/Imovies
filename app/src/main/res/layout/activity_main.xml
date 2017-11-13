@@ -6,9 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sung.imovies.ui.MainActivity">
-
+    <RadioGroup
+        android:id="@+id/rg_sort_by"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/rb_hot"
+            android:textColor="@color/colorPrimary"
+            style="@style/radioButton"
+            android:text="评分"/>
+        <RadioButton
+            android:id="@+id/rb_nice"
+            style="@style/radioButton"
+            android:text="热门"/>
+    </RadioGroup>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rc_moview_list"
+        android:layout_below="@+id/rg_sort_by"
         android:layout_margin="1dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

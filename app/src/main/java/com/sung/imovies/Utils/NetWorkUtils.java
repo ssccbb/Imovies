@@ -24,7 +24,10 @@ public class NetWorkUtils {
 
     private static final String API_KEY = "your api key";
 
-    private static final String BASE_MOVIES_LIST = "http://api.themoviedb.org/3/movie/top_rated";
+    public static final String MODE_TOP = "top_rated";
+    public static final String MODE_POPULAR = "popular";
+
+    private static final String BASE_MOVIES_LIST = "http://api.themoviedb.org/3/movie/";
     private static final String BASE_MOVIES_COVER = "http://image.tmdb.org/t/p/";
     //构建图片uri屏幕参数
     private static final String screenSize = "w185";
@@ -35,8 +38,8 @@ public class NetWorkUtils {
     /**
      * 创建列表请求
      * */
-    public static URL buildListUri(){
-        Uri buildUri = Uri.parse(BASE_MOVIES_LIST).buildUpon()
+    public static URL buildListUri(String mode){
+        Uri buildUri = Uri.parse(BASE_MOVIES_LIST+mode).buildUpon()
                 .appendQueryParameter(PARAM_LANGUAGE, "zh")
                 .appendQueryParameter(PARAM_APIKEY, API_KEY)
                 .build();
