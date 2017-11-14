@@ -81,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_refresh:
                 break;
             case R.id.action_hot:
-                mode = NetWorkUtils.MODE_TOP;
+                mode = NetWorkUtils.MODE_POPULAR;
                 break;
             case R.id.action_score:
-                mode = NetWorkUtils.MODE_POPULAR;
+                mode = NetWorkUtils.MODE_TOP;
                 break;
             default:
                 break;
