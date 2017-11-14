@@ -3,4 +3,6 @@
     <string name="movies_list">热门电影</string>
     <string name="movies_detail">影片详情</string>
     <string name="refresh">刷新</string>
+    <string name="category_hot">热门</string>
+    <string name="category_score">评分</string>
 </resources>

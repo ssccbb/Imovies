@@ -3,39 +3,32 @@ package com.sung.imovies.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.LayoutDirection;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.squareup.picasso.Picasso;
 import com.sung.imovies.R;
 import com.sung.imovies.Utils.NetWorkUtils;
 import com.sung.imovies.bean.MoviesItem;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener{
+public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
+    private int SINGLE_LINE_ITEM_NUM = 2;
     //args
     private Context mContext;
     private String mode = null;//当前排序模式
@@ -43,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     //views
     private RecyclerView mMoviesList;
     private ProgressBar mPbRefresh;
-    private RadioGroup mRadioGroup;
 
     //datas
     private List<MoviesItem> mMoviesData;
@@ -54,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         initUi();
     }
 
@@ -66,59 +57,14 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private void findViewByID(){
         mMoviesList = (RecyclerView) findViewById(R.id.rc_moview_list);
         mPbRefresh = (ProgressBar) findViewById(R.id.pb_refresh);
-        mRadioGroup = (RadioGroup) findViewById(R.id.rg_sort_by);
     }
 
     private void setData(){
-        mRadioGroup.setOnCheckedChangeListener(this);
         mContext = MainActivity.this;
         mMoviesData = new ArrayList<>();
         mGetDataTask = new GetMoviesData();
         //getdata
-        mGetDataTask.execute(NetWorkUtils.buildListUri(NetWorkUtils.MODE_TOP));
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        // TODO: 2017/11/8 横竖屏切换时更改布局
-//        if (newConfig.getLayoutDirection() == Configuration.ORIENTATION_PORTRAIT){
-//            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//            getSupportActionBar().show();
-//        }
-//        if (newConfig.getLayoutDirection() == Configuration.ORIENTATION_LANDSCAPE){
-//            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//            getSupportActionBar().hide();
-//        }
-    }
-
-    @Override
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        clearData();
-        if (mPbRefresh.getVisibility() == View.VISIBLE){
-            mGetDataTask.cancel(true);
-            mGetDataTask = null;
-        }
-        RadioButton rbHot = (RadioButton) group.getChildAt(0);
-        RadioButton rbPop = (RadioButton) group.getChildAt(1);
-        rbHot.setTextColor(getResources().getColor(R.color.color_light_black));
-        rbPop.setTextColor(getResources().getColor(R.color.color_light_black));
-        switch (checkedId){
-            case R.id.rb_hot:
-                mode = NetWorkUtils.MODE_TOP;
-                rbHot.setTextColor(getResources().getColor(R.color.colorPrimary));
-                break;
-            case R.id.rb_nice:
-                mode = NetWorkUtils.MODE_POPULAR;
-                rbPop.setTextColor(getResources().getColor(R.color.colorPrimary));
-                break;
-            default:
-                mode = NetWorkUtils.MODE_TOP;
-                rbHot.setTextColor(getResources().getColor(R.color.colorPrimary));
-                break;
-        }
-        mGetDataTask = new GetMoviesData();
+        mode = NetWorkUtils.MODE_TOP;
         mGetDataTask.execute(NetWorkUtils.buildListUri(mode));
     }
 
@@ -133,11 +79,17 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.action_refresh:
-                refresh();
+                break;
+            case R.id.action_hot:
+                mode = NetWorkUtils.MODE_TOP;
+                break;
+            case R.id.action_score:
+                mode = NetWorkUtils.MODE_POPULAR;
                 break;
             default:
                 break;
         }
+        refresh();
         return true;
     }
 
@@ -157,6 +109,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             mMoviesAdapter.notifyDataSetChanged();
             Toast.makeText(mContext, "reset data!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            SINGLE_LINE_ITEM_NUM = 2;
+        }
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+            SINGLE_LINE_ITEM_NUM = 3;
+        }
+        refresh();
     }
 
     class GetMoviesData extends AsyncTask<URL,Void,List>{
@@ -208,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
             mMoviesData = list;
 
-            GridLayoutManager manager = new GridLayoutManager(mContext,2);
+            GridLayoutManager manager = new GridLayoutManager(mContext,SINGLE_LINE_ITEM_NUM);
             mMoviesAdapter = new MoviesListAdapter(mMoviesData.size());
             mMoviesList.setLayoutManager(manager);
             mMoviesList.setHasFixedSize(true);

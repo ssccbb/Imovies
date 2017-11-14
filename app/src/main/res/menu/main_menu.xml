@@ -2,7 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/action_refresh"
         android:orderInCategory="1"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
         android:icon="@mipmap/ic_refresh"
         android:title="@string/refresh"/>
+    <item android:id="@+id/action_hot"
+        android:orderInCategory="2"
+        android:showAsAction="ifRoom"
+        android:title="@string/category_hot"/>
+    <item android:id="@+id/action_score"
+        android:orderInCategory="3"
+        android:showAsAction="ifRoom"
+        android:title="@string/category_score"/>
 </menu>
